@@ -29,7 +29,7 @@ class Att(nn.Module):
         X = X.unsqueeze(2)
         X = X.repeat(1, 1, 8)
         attn_output, attentions = self.multihead_attn(X, X, X)
-        attn_output = attn_output.squeeze(2)
+        attn_output = torch.mean(attn_output, dim=2)
         x = self.encoder(attn_output)
         x = self.decoder(x)
         similarity_matrix = attentions.mean(dim=0)
